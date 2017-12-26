@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+    <h1>Movimentação de Conta</h1>
+
+    <h:form id="formMovimentacao">
+        <p:messages id="mensagens"/>
+        <p:panel header="Consulta" rendered="#{movimentacaoControler.consulta}" style="margin-bottom: 10px" id="panelConsulta">
+            <h:panelGrid columns="2">
+                <p:outputLabel value="Número Agência:" for="numeroAg"/>
+                <p:inputText id="numeroAg" value="#{movimentacaoControler.contaDto.agencia}"/>
+
+                <p:outputLabel value="Número Conta:" for="numeroC"/>
+                <p:inputText id="numeroC" value="#{movimentacaoControler.contaDto.numero}"/>
+
+                <p:commandButton value="Buscar" actionListener="#{movimentacaoControler.buscarConta}"
+                                 update="formMovimentacao" process="@this panelConsulta"/>
+            </h:panelGrid>
+        </p:panel>
+
+        <p:panel header="Dados" rendered="#{!movimentacaoControler.consulta}" style="margin-bottom: 15px" id="panelMovimentacao">
+            <h:panelGrid columns="2">
+                <p:outputLabel value="Nome Titular:" for="nomeTitular"/>
+                <p:inputText id="nomeTitular" disabled="true" value="#{movimentacaoControler.movimentacaoDto.conta.titular}"/>
+
+                <p:outputLabel value="Nome Banco:" for="nomeBanco"/>
+                <p:inputText id="nomeBanco" disabled="true" value="#{movimentacaoControler.movimentacaoDto.conta.banco}"/>
+
+                <p:outputLabel value="Número Agência:" for="numeroAgencia"/>
+                <p:inputText id="numeroAgencia" disabled="true" value="#{movimentacaoControler.movimentacaoDto.conta.agencia}"/>
+
+                <p:outputLabel value="Número Conta:" for="numeroConta"/>
+                <p:inputText id="numeroConta" disabled="true" value="#{movimentacaoControler.movimentacaoDto.conta.numero}"/>
+            </h:panelGrid>
+
+            <p:panel header="Movimentação" id="panelMovimentacaoInterno">
+                <h:panelGrid columns="2" style="margin-bottom: 10px">
+                    <p:outputLabel value="Tipo Movimentação:" for="tipoMovimentacao"/>
+                    <p:selectOneMenu id="tipoMovimentacao" value="#{movimentacaoControler.tipoMovimentacao}">
+                        <f:selectItem itemLabel="-Selecione-" noSelectionOption="true" itemValue=""/>
+                        <f:selectItem itemLabel="Entrada" itemValue="0"/>
+                        <f:selectItem itemLabel="Saída" itemValue="1"/>
+                    </p:selectOneMenu>
+
+                    <p:outputLabel value="Valor (R$)" for="valor"/>
+                    <p:inputText id="valor" value="#{movimentacaoControler.movimentacaoDto.valor}"/>
+
+                    <p:outputLabel value="Descrição:"/>
+                    <p:inputTextarea rows="2" cols="30" value="#{movimentacaoControler.movimentacaoDto.descricao}"/>
+                </h:panelGrid>
+                <p:commandButton value="Movimentar" actionListener="#{movimentacaoControler.movimentar}"
+                                 update="formMovimentacao" process="@this panelMovimentacaoInterno"/>
+            </p:panel>
+        </p:panel>
+
+        <p:button value="Limpar Campos" outcome="movimentarConta.xhtml"/>
+        <p:button value="Voltar ao Menu" outcome="menu.xhtml"/>
+
+    </h:form>
+
+</h:body>
+</html>
