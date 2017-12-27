@@ -1,6 +1,8 @@
 package br.com.trabalhoDiegoGuedes.Dto;
 
-public class ContaDto {
+import java.io.Serializable;
+
+public class ContaDto implements Serializable{
 
     Integer id;
     String titular, numero, banco, agencia;

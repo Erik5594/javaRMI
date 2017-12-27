@@ -3,13 +3,15 @@ package br.com.trabalhoDiegoGuedes.Controlador;
 import br.com.trabalhoDiegoGuedes.Dto.ContaDto;
 import br.com.trabalhoDiegoGuedes.Dto.MovimentacaoDto;
 import br.com.trabalhoDiegoGuedes.Dto.TipoTransacao;
-import br.com.trabalhoDiegoGuedes.Util.UtilMocks;
+import br.com.trabalhoDiegoGuedes.client.TransacaoClient;
+import br.com.diego.financas.servico.Transacao;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.Date;
 
 @ManagedBean
@@ -20,6 +22,7 @@ public class MovimentacaoControler {
     private ContaDto contaDto = new ContaDto();
     private String tipoMovimentacao;
     boolean consulta = true;
+    private Transacao transacao = new TransacaoClient();
 
     public MovimentacaoControler(){
         System.out.println("Construiu MovimentacaoControler");
@@ -27,10 +30,15 @@ public class MovimentacaoControler {
 
     public void buscarConta(){
         if(validacoesConta()){
-            contaDto = UtilMocks.consultarConta(contaDto);
-            if(contaDto != null){
-                movimentacaoDto.setConta(contaDto);
-                consulta = false;
+            try {
+                contaDto = transacao.consultarConta(contaDto);
+                if (contaDto != null) {
+                    movimentacaoDto.setConta(contaDto);
+                    consulta = false;
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Movimentação: "+e.getMessage(), ""));
             }
         }
     }
@@ -56,10 +64,15 @@ public class MovimentacaoControler {
     public void movimentar(){
         completarMovimentacao();
         if(validacoes()) {
-            if(UtilMocks.movimentarConta(this.movimentacaoDto)){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Movimentação: Movimentação realizada com sucesso!", ""));
-            }else{
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Movimentação: Houve uma falha ao tentar gravar Movimentação. Por favor tente mais tarde!", ""));
+            try {
+                if (transacao.criarMovimentacao(this.movimentacaoDto)) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Movimentação: Movimentação realizada com sucesso!", ""));
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Movimentação: Houve uma falha ao tentar gravar Movimentação. Por favor tente mais tarde!", ""));
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Movimentação: "+e.getMessage(), ""));
             }
         }
     }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</h:head>
+<h:body>
+    <h1>Configurar Servidor</h1>
+    <h:form>
+
+
+        <p:panel header="Configurações" >
+            <h:panelGrid columns="2" >
+                <p:outputLabel value="Host Servidor" for="hostServidor"/>
+                <p:inputText id="hostServidor" value="#{serverControler.servidor.ip}"
+                disabled="#{!serverControler.criar}"/>
+
+                <p:outputLabel value="Porta Servidor" for="portaServidor"/>
+                <p:inputText id="portaServidor" value="#{serverControler.servidor.porta}"
+                disabled="#{!serverControler.criar}"/>
+            </h:panelGrid>
+            <p:commandButton rendered="#{!serverControler.criar and !serverControler.ok}" value="Ler Configuração"
+                             actionListener="#{serverControler.lerProperties}" update="@all"/>
+            <p:commandButton rendered="#{serverControler.criar}"
+                             value="Salvar" action="#{serverControler.criarProperties}"/>
+            <p:button outcome="menu.xhtml" value="Menu" rendered="#{serverControler.ok}"/>
+        </p:panel>
+    </h:form>
+
+</h:body>
+</html>

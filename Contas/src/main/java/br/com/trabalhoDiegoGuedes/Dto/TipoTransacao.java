@@ -1,5 +1,7 @@
 package br.com.trabalhoDiegoGuedes.Dto;
 
-public enum TipoTransacao {
+import java.io.Serializable;
+
+public enum TipoTransacao implements Serializable{
     ENTRADA,SAIDA;
 }

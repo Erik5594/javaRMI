@@ -1,24 +1,32 @@
 package br.com.trabalhoDiegoGuedes.Controlador;
 
 import br.com.trabalhoDiegoGuedes.Dto.ContaDto;
-import br.com.trabalhoDiegoGuedes.Util.UtilMocks;
+import br.com.trabalhoDiegoGuedes.client.TransacaoClient;
+import br.com.diego.financas.servico.Transacao;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.rmi.RemoteException;
 
 @ManagedBean
 @ViewScoped
 public class ContaControler {
     private ContaDto conta = new ContaDto();
+    private Transacao transacao = new TransacaoClient();
 
     public void salvar(){
         if(validacoes(this.conta)){
-            if(UtilMocks.criarConta(conta)){
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Criar Conta: Conta Criada!", ""));
-            }else{
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Criar Conta: Houve uma falhar ao tentar criar Conta. Por favor tente mais tarde!", ""));
+            try {
+                if (transacao.criarConta(conta)) {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Criar Conta: Conta Criada!", ""));
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Criar Conta: Houve uma falhar ao tentar criar Conta. Por favor tente mais tarde!", ""));
+                }
+            }catch (RemoteException e) {
+                e.printStackTrace();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Criar Conta: "+e.getMessage(), ""));
             }
         }
     }
