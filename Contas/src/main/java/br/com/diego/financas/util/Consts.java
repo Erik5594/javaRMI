@@ -1,4 +1,4 @@
-package br.com.trabalhoDiegoGuedes.Util;
+package br.com.diego.financas.util;
 
 public class Consts {
     public static final String DIR_PROPIEDADES = System.getProperty("user.home")+"/contas/propriedades";

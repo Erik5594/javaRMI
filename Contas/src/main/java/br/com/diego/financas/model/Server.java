@@ -1,4 +1,4 @@
-package br.com.trabalhoDiegoGuedes.model;
+package br.com.diego.financas.model;
 
 public class Server {
     private String ip;

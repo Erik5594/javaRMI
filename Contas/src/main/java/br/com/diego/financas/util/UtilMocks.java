@@ -1,4 +1,4 @@
-package br.com.trabalhoDiegoGuedes.Util;
+package br.com.diego.financas.util;
 
 import br.com.diego.financas.dto.ContaDto;
 import br.com.diego.financas.dto.MovimentacaoDto;

@@ -1,6 +1,6 @@
-package br.com.trabalhoDiegoGuedes.Util;
+package br.com.diego.financas.util;
 
-import br.com.trabalhoDiegoGuedes.model.Server;
+import br.com.diego.financas.model.Server;
 
 import java.io.*;
 import java.util.Properties;
