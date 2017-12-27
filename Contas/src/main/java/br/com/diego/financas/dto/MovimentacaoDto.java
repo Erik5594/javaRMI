@@ -1,5 +1,7 @@
 package br.com.diego.financas.dto;
 
+import br.com.diego.financas.modelo.TipoTransacao;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;

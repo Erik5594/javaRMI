@@ -1,9 +1,9 @@
 package br.com.diego.financas.controlador;
 
+import br.com.diego.financas.client.TransacaoClient;
 import br.com.diego.financas.dto.ContaDto;
 import br.com.diego.financas.dto.MovimentacaoDto;
-import br.com.diego.financas.dto.TipoTransacao;
-import br.com.diego.financas.client.TransacaoClient;
+import br.com.diego.financas.modelo.TipoTransacao;
 import br.com.diego.financas.servico.Transacao;
 
 import javax.faces.application.FacesMessage;
