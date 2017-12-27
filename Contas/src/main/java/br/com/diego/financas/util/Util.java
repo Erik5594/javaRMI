@@ -16,8 +16,9 @@ public class Util {
             if(arquivo.exists()){
                 FileInputStream file = new FileInputStream(arquivo);
                 prop.load(file);
+                file.close();
                 server.setIp(prop.getProperty(Consts.ARQ_URL_SERVIDOR));
-                int porta = 0;
+                int porta;
                 try {
                     porta = Integer.parseInt(prop.getProperty(Consts.ARQ_PORTA));
                 }catch (NumberFormatException e){
