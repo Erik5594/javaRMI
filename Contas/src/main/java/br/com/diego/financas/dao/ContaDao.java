@@ -15,6 +15,7 @@ public class ContaDao {
 
         manager.getTransaction().begin();
         manager.persist(conta);
+        manager.getTransaction().commit();
         return true;
     }
 

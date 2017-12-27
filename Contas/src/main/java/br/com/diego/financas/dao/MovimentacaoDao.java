@@ -12,6 +12,7 @@ public class MovimentacaoDao {
 
         manager.getTransaction().begin();
         manager.persist(movimentacao);
+        manager.getTransaction().commit();
         return true;
     }
 }
