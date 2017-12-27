@@ -1,7 +1,7 @@
 package br.com.trabalhoDiegoGuedes.Util;
 
-import br.com.trabalhoDiegoGuedes.Dto.ContaDto;
-import br.com.trabalhoDiegoGuedes.Dto.MovimentacaoDto;
+import br.com.diego.financas.dto.ContaDto;
+import br.com.diego.financas.dto.MovimentacaoDto;
 
 public class UtilMocks {
 

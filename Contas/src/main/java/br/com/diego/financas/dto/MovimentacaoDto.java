@@ -1,4 +1,4 @@
-package br.com.trabalhoDiegoGuedes.Dto;
+package br.com.diego.financas.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -1,7 +1,7 @@
 package br.com.diego.financas.servico;
 
-import br.com.trabalhoDiegoGuedes.Dto.ContaDto;
-import br.com.trabalhoDiegoGuedes.Dto.MovimentacaoDto;
+import br.com.diego.financas.dto.ContaDto;
+import br.com.diego.financas.dto.MovimentacaoDto;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
